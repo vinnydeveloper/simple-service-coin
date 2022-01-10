@@ -1,16 +1,13 @@
-const express = require("express");
-const path = require("path");
+const fs = require("fs");
+const http = require("http");
 
-const listaMoedas = require("./moedas.json");
+const listCoins = require("./moedas.json");
 
-const serv = express();
+const server = http.createServer((req, res) => {
+  res.setHeader("Content-Type", "text/html");
+  res.write(JSON.stringify(listCoins));
 
-serv.get("/moedas", (req, res) => {
-  return res.json(listaMoedas);
+  return res.end();
 });
 
-serv.get("/", (req, res) => {
-  return res.sendFile(path.resolve("pagina.html"));
-});
-
-serv.listen(4000);
+server.listen(4000);
